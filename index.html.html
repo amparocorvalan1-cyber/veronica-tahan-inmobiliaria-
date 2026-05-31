@@ -1,0 +1,733 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
+  :root {
+    --tostado: #7A5C4A;
+    --crema: #F5EDE3;
+    --marron: #5C3D2E;
+    --arena: #C4A882;
+    --blanco: #FFFFFF;
+    --crema-claro: #FAF0EC;
+  }
+  .vt-wrap * { margin: 0; padding: 0; box-sizing: border-box; }
+  .vt-wrap {
+    font-family: 'Jost', sans-serif;
+    background: var(--crema-claro);
+    color: var(--marron);
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+
+  /* NAV */
+  .vt-nav {
+    position: sticky; top: 0; width: 100%; z-index: 100;
+    background: var(--marron); padding: 0 1.2rem;
+    display: flex; align-items: center; justify-content: space-between; height: 56px;
+    max-width: 440px;
+  }
+  .vt-logo-nav {
+    font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 400;
+    color: var(--crema); letter-spacing: 0.03em; line-height: 1.2;
+  }
+  .vt-logo-nav span { color: var(--arena); font-style: italic; }
+  .vt-nav-right { display: flex; align-items: center; gap: 0.7rem; }
+  .vt-nav-wp {
+    background: var(--arena); color: var(--marron); border: none;
+    padding: 0.4rem 0.9rem; font-family: 'Jost', sans-serif;
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; text-decoration: none; font-weight: 500;
+  }
+  .vt-hamburger { display: flex; flex-direction: column; gap: 4px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .vt-hamburger span { width: 20px; height: 1px; background: var(--crema); display: block; }
+  .vt-menu {
+    display: none; position: fixed; top: 56px; left: 0; right: 0;
+    background: var(--marron); padding: 1.5rem; z-index: 99;
+    flex-direction: column; gap: 1.2rem; max-width: 440px; margin: 0 auto;
+  }
+  .vt-menu.open { display: flex; }
+  .vt-menu a {
+    color: var(--crema); text-decoration: none; font-size: 0.9rem;
+    letter-spacing: 0.12em; text-transform: uppercase; font-weight: 300;
+    border-bottom: 1px solid rgba(196,168,130,0.2); padding-bottom: 1rem;
+  }
+
+  /* HERO */
+  .vt-hero {
+    background: var(--marron);
+    min-height: 380px;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 1.5rem 1.5rem; position: relative;
+    width: 100%;
+  }
+  .vt-hero-logo {
+    width: 200px;
+    height: auto;
+    margin: 0 auto 1rem;
+    display: block;
+    filter: none;
+    opacity: 1;
+  }
+  .vt-hero-badge {
+    font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--arena); margin-bottom: 0.5rem; font-weight: 300;
+  }
+  .vt-hero h1 {
+    font-family: 'Cormorant Garamond', serif; font-size: 2.6rem;
+    font-weight: 300; color: var(--crema); line-height: 1.1; margin-bottom: 0.4rem;
+  }
+  .vt-hero h1 em { font-style: italic; color: var(--arena); }
+  .vt-hero-sub {
+    font-size: 0.8rem; color: var(--arena); letter-spacing: 0.06em;
+    margin-bottom: 1.2rem; font-weight: 300;
+  }
+  .vt-hero-btns { display: flex; gap: 0.8rem; justify-content: center; flex-direction: column; align-items: center; }
+  .vt-btn-primary {
+    background: var(--arena); color: var(--marron); padding: 0.8rem 2rem;
+    font-family: 'Jost', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em;
+    text-transform: uppercase; border: none; cursor: pointer;
+    text-decoration: none; font-weight: 500; display: inline-block; width: 220px; text-align: center;
+  }
+  .vt-btn-outline {
+    background: transparent; color: var(--crema); padding: 0.8rem 2rem;
+    font-family: 'Jost', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em;
+    text-transform: uppercase; border: 1px solid var(--arena); cursor: pointer;
+    text-decoration: none; font-weight: 300; display: inline-block; width: 220px; text-align: center;
+  }
+
+  /* SECCIONES */
+  .vt-section { padding: 2.5rem 1rem; width: 100%; }
+  .vt-section-header { text-align: center; margin-bottom: 1.8rem; }
+  .vt-section-tag {
+    font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--arena); margin-bottom: 0.6rem; font-weight: 300;
+  }
+  .vt-section-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 2rem;
+    font-weight: 300; color: var(--marron); line-height: 1.2;
+  }
+  .vt-section-title em { font-style: italic; color: var(--tostado); }
+  .vt-bg-claro { background: var(--crema-claro); }
+  .vt-bg-crema { background: var(--crema); }
+
+  /* CARDS */
+  .vt-prop-grid { display: flex; flex-direction: column; gap: 1.2rem; }
+  .vt-prop-card { background: var(--blanco); overflow: hidden; border-radius: 2px; }
+  .vt-prop-img {
+    width: 100%; height: 210px; object-fit: cover; display: block;
+  }
+  .vt-prop-img-wrap { position: relative; }
+  .vt-prop-badge {
+    position: absolute; top: 0.8rem; left: 0.8rem;
+    background: var(--marron); color: var(--crema);
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 0.25rem 0.7rem; font-weight: 400;
+  }
+  .vt-prop-body { padding: 1rem 1rem 1rem; }
+  .vt-prop-tipo {
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--arena); margin-bottom: 0.3rem; font-weight: 400;
+  }
+  .vt-prop-titulo {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.05rem;
+    font-weight: 400; color: var(--marron); margin-bottom: 0.2rem; line-height: 1.3;
+  }
+  .vt-prop-features {
+    display: flex; gap: 0.6rem; margin-bottom: 0.8rem;
+    border-top: 1px solid var(--crema); padding-top: 0.8rem; flex-wrap: wrap;
+  }
+  .vt-feat {
+    display: flex; flex-direction: column; align-items: center;
+    font-size: 0.62rem; color: var(--tostado); gap: 0.1rem; font-weight: 300;
+    min-width: 40px;
+  }
+  .vt-feat strong { font-size: 0.9rem; color: var(--marron); font-weight: 500; }
+  .vt-prop-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid var(--crema); padding-top: 0.8rem; gap: 0.5rem;
+  }
+  .vt-btn-email {
+    background: var(--crema); color: var(--marron); border: 1px solid var(--arena);
+    padding: 0.5rem 0.8rem; font-size: 0.62rem; letter-spacing: 0.08em;
+    text-transform: uppercase; cursor: pointer;
+    font-family: 'Jost', sans-serif; font-weight: 400;
+    text-decoration: none; display: inline-block; flex: 1; text-align: center;
+  }
+  .vt-btn-wp {
+    background: var(--marron); color: var(--crema); border: none;
+    padding: 0.5rem 0.8rem; font-size: 0.62rem; letter-spacing: 0.08em;
+    text-transform: uppercase; cursor: pointer;
+    font-family: 'Jost', sans-serif; font-weight: 300;
+    text-decoration: none; display: inline-block; flex: 1; text-align: center;
+  }
+
+  /* NOSOTROS */
+  .vt-nosotros { background: var(--marron); color: var(--crema); padding: 2.5rem 1rem; }
+  .vt-nosotros-tag {
+    font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--arena); margin-bottom: 0.8rem; font-weight: 300;
+  }
+  .vt-nosotros-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.9rem;
+    font-weight: 300; line-height: 1.2; margin-bottom: 1.2rem; color: var(--crema);
+  }
+  .vt-nosotros-title em { font-style: italic; color: var(--arena); }
+  .vt-nosotros-desc {
+    font-size: 0.88rem; line-height: 1.8; color: rgba(245,237,227,0.8);
+    font-weight: 300; margin-bottom: 1.2rem;
+  }
+  .vt-nosotros-stats { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .vt-stat-num {
+    font-family: 'Cormorant Garamond', serif; font-size: 2.2rem;
+    color: var(--arena); font-weight: 300;
+  }
+  .vt-stat-label { font-size: 0.68rem; color: rgba(245,237,227,0.6); font-weight: 300; }
+  .vt-mat { font-size: 0.7rem; color: var(--arena); letter-spacing: 0.1em; }
+
+  /* CONTACTO */
+  .vt-contacto { background: var(--crema-claro); padding: 2.5rem 1rem; }
+  .vt-contacto-item {
+    display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 1.2rem;
+  }
+  .vt-contacto-icon {
+    width: 36px; height: 36px; background: var(--arena);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 1rem;
+  }
+  .vt-contacto-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--tostado); margin-bottom: 0.15rem; font-weight: 300; }
+  .vt-contacto-val { font-size: 0.85rem; color: var(--marron); font-weight: 300; text-decoration: none; display: block; }
+  .vt-form-group { margin-bottom: 1rem; }
+  .vt-form-group label { display: block; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--tostado); margin-bottom: 0.4rem; font-weight: 300; }
+  .vt-form-group input, .vt-form-group textarea, .vt-form-group select {
+    width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--arena);
+    background: var(--blanco); font-family: 'Jost', sans-serif; font-size: 0.85rem;
+    color: var(--marron); outline: none; font-weight: 300;
+  }
+  .vt-form-group textarea { height: 100px; resize: vertical; }
+  .vt-btn-send {
+    width: 100%; background: var(--marron); color: var(--crema);
+    border: none; padding: 0.9rem; font-family: 'Jost', sans-serif;
+    font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+    cursor: pointer; font-weight: 400; margin-top: 0.5rem; display: block;
+  }
+  .vt-divider { height: 1px; background: var(--arena); opacity: 0.3; margin: 1.8rem 0; }
+  .vt-contacto-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;
+    font-weight: 300; margin-bottom: 1.2rem; color: var(--marron);
+  }
+  .vt-btn-full {
+    display: block; text-align: center; width: 100%;
+    background: var(--arena); color: var(--marron); padding: 0.85rem;
+    font-family: 'Jost', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em;
+    text-transform: uppercase; text-decoration: none; font-weight: 500;
+    margin-bottom: 0.8rem;
+  }
+
+  /* FOOTER */
+  .vt-footer {
+    background: var(--marron); padding: 2rem 1rem; text-align: center;
+  }
+  .vt-footer-logo-img {
+    width: 70px; height: auto; display: block; margin: 0 auto 0.8rem;
+    filter: none; opacity: 1;
+  }
+  .vt-footer-logo-text {
+    font-family: 'Cormorant Garamond', serif; font-size: 0.95rem;
+    font-weight: 300; color: var(--crema); margin-bottom: 0.4rem;
+  }
+  .vt-footer-logo-text span { color: var(--arena); font-style: italic; }
+  .vt-footer-copy { font-size: 0.68rem; color: rgba(245,237,227,0.4); font-weight: 300; }
+</style>
+
+<div class="vt-wrap">
+
+  <!-- NAV -->
+  <nav class="vt-nav">
+    <div class="vt-logo-nav">Verónica <span>Tahan</span><br>Inmobiliaria</div>
+    <div class="vt-nav-right">
+      <a class="vt-nav-wp" href="https://w.app/ryjs9q" target="_blank">WhatsApp</a>
+      <button class="vt-hamburger" onclick="vtToggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="vt-menu" id="vtMenu">
+    <a href="#vt-venta" onclick="vtCloseMenu()">En Venta</a>
+    <a href="#vt-alquiler" onclick="vtCloseMenu()">En Alquiler</a>
+    <a href="#vt-nosotros" onclick="vtCloseMenu()">Nosotros</a>
+    <a href="#vt-contacto" onclick="vtCloseMenu()">Contacto</a>
+  </div>
+
+  <!-- HERO -->
+  <div class="vt-hero">
+    <div>
+      <img class="vt-hero-logo" src="http://localhost/wordpress-6.9.4/wordpress/wp-content/uploads/2026/05/Veronica-Tahan-Web-28.png" alt="Verónica Tahan Inmobiliaria">
+      <p class="vt-hero-badge">Mendoza · Argentina</p>
+      <h1>Tu hogar ideal<br>en <em>Mendoza</em></h1>
+      <p class="vt-hero-sub">Propiedades residenciales con atención personalizada</p>
+      <div class="vt-hero-btns">
+        <a class="vt-btn-primary" href="#vt-venta">Ver en venta</a>
+        <a class="vt-btn-outline" href="#vt-alquiler">Ver en alquiler</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- EN VENTA -->
+  <div class="vt-section vt-bg-claro" id="vt-venta">
+    <div class="vt-section-header">
+      <p class="vt-section-tag">Propiedades disponibles</p>
+      <h2 class="vt-section-title">En <em>Venta</em></h2>
+    </div>
+    <div class="vt-prop-grid">
+
+      <div class="vt-prop-card">
+        <div class="vt-prop-img-wrap">
+          <img class="vt-prop-img" src="http://localhost/wordpress-6.9.4/wordpress/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-28-at-18.28.17-1.jpeg" alt="Casa Pueyrredon">
+          <span class="vt-prop-badge">En Venta</span>
+        </div>
+        <div class="vt-prop-body">
+          <p class="vt-prop-tipo">Casa · Venta</p>
+          <h3 class="vt-prop-titulo">Calle Pueyrredon, Chacras de Coria</h3>
+          <div class="vt-prop-features">
+            <div class="vt-feat"><strong>3</strong>Hab.</div>
+            <div class="vt-feat"><strong>2</strong>Baños</div>
+            <div class="vt-feat"><strong>✓</strong>Cochera</div>
+          </div>
+          <div class="vt-prop-footer">
+            <a class="vt-btn-email" href="mailto:veronicatahaninmobiliaria@gmail.com?subject=Consulta Casa Pueyrredon Chacras de Coria">Email</a>
+            <a class="vt-btn-wp" href="https://w.app/ryjs9q" target="_blank">Contactar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="vt-prop-card">
+        <div class="vt-prop-img-wrap">
+          <img class="vt-prop-img" src="http://localhost/wordpress-6.9.4/wordpress/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-28-at-18.28.43.jpeg" alt="Gran Boedo">
+          <span class="vt-prop-badge">En Venta</span>
+        </div>
+        <div class="vt-prop-body">
+          <p class="vt-prop-tipo">Casa · Venta</p>
+          <h3 class="vt-prop-titulo">Casa Ubicada en Barrio Privado Gran Boedo</h3>
+          <div class="vt-prop-features">
+            <div class="vt-feat"><strong>3</strong>Hab.</div>
+            <div class="vt-feat"><strong>3</strong>Baños</div>
+            <div class="vt-feat"><strong>✓</strong>Cochera</div>
+          </div>
+          <div class="vt-prop-footer">
+            <a class="vt-btn-email" href="mailto:veronicatahaninmobiliaria@gmail.com?subject=Consulta Casa Gran Boedo">Email</a>
+            <a class="vt-btn-wp" href="https://w.app/ryjs9q" target="_blank">Contactar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="vt-prop-card">
+        <div class="vt-prop-img-wrap">
+          <img class="vt-prop-img" src="http://localhost/wordpress-6.9.4/wordpress/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-28-at-18.28.59.jpeg" alt="Rugby Club Etapa II">
+          <span class="vt-prop-badge">En Venta</span>
+        </div>
+        <div class="vt-prop-body">
+          <p class="vt-prop-tipo">Casa · Venta</p>
+          <h3 class="vt-prop-titulo">Casa Ubicada en Barrio Liceo Rugby Club Etapa II</h3>
+          <div class="vt-prop-features">
+            <div class="vt-feat"><strong>2</strong>Hab.</div>
+            <div class="vt-feat"><strong>2</strong>Baños</div>
+            <div class="vt-feat"><strong>✓</strong>Cochera</div>
+          </div>
+          <div class="vt-prop-footer">
+            <a class="vt-btn-email" href="mailto:veronicatahaninmobiliaria@gmail.com?subject=Consulta Casa Rugby Club Etapa II">Email</a>
+            <a class="vt-btn-wp" href="https://w.app/ryjs9q" target="_blank">Contactar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="vt-prop-card">
+        <div class="vt-prop-img-wrap">
+          <img class="vt-prop-img" src="http://localhost/wordpress-6.9.4/wordpress/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-28-at-18.29.21.jpeg" alt="Lote Terrazas Park Vistalba">
+          <span class="vt-prop-badge">Lote en Venta</span>
+        </div>
+        <div class="vt-prop-body">
+          <p class="vt-prop-tipo">Lote · Venta</p>
+          <h3 class="vt-prop-titulo">Lote Barrio Terrazas Park Vistalba</h3>
+          <div class="vt-prop-features">
+            <div class="vt-feat"><strong>500</strong>m²</div>
+          </div>
+          <div class="vt-prop-footer">
+            <a class="vt-btn-email" href="mailto:veronicatahaninmobiliaria@gmail.com?subject=Consulta Lote Terrazas Park Vistalba">Email</a>
+            <a class="vt-btn-wp" href="https://w.app/ryjs9q" target="_blank">Contactar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="vt-prop-card">
+        <div class="vt-prop-img-wrap">
+          <img class="vt-prop-img" src="http://localhost/wordpress-6.9.4/wordpress/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-28-at-18.29.47.jpeg" alt="Local Comercial Ing Baglietto">
+          <span class="vt-prop-badge">Local Comercial</span>
+        </div>
+        <div class="vt-prop-body">
+          <p class="vt-prop-tipo">Local Comercial · Venta</p>
+          <h3 class="vt-prop-titulo">Ing. Baglietto 2910, Ciudad de Mendoza</h3>
+          <div class="vt-prop-features">
+            <div class="vt-feat"><strong>21</strong>m²</div>
+          </div>
+          <div class="vt-prop-footer">
+            <a class="vt-btn-email" href="mailto:veronicatahaninmobiliaria@gmail.com?subject=Consulta Local Ing. Baglietto">Email</a>
+            <a class="vt-btn-wp" href="https://w.app/ryjs9q" target="_blank">Contactar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="vt-prop-card">
+        <div class="vt-prop-img-wrap">
+          <img class="vt-prop-img" src="http://localhost/wordpress-6.9.4/wordpress/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-28-at-18.30.10.jpeg" alt="Francisco Evans Luján de Cuyo">
+          <span class="vt-prop-badge">En Venta</span>
+        </div>
+        <div class="vt-prop-body">
+          <p class="vt-prop-tipo">Casa · Venta</p>
+          <h3 class="vt-prop-titulo">Francisco Evans, Luján de Cuyo</h3>
+          <div class="vt-prop-features">
+            <div class="vt-feat"><strong>2</strong>Hab.</div>
+            <div class="vt-feat"><strong>1</strong>Baño</div>
+            <div class="vt-feat"><strong>1</strong>Cochera</div>
+          </div>
+          <div class="vt-prop-footer">
+            <a class="vt-btn-email" href="mailto:veronicatahaninmobiliaria@gmail.com?subject=Consulta Casa Francisco Evans">Email</a>
+            <a class="vt-btn-wp" href="https://w.app/ryjs9q" target="_blank">Contactar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="vt-prop-card">
+        <div class="vt-prop-img-wrap">
+          <img class="vt-prop-img" src="http://localhost/wordpress-6.9.4/wordpress/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-28-at-18.30.34.jpeg" alt="Quinta San Francisco del Monte">
+          <span class="vt-prop-badge">Quinta en Venta</span>
+        </div>
+        <div class="vt-prop-body">
+          <p class="vt-prop-tipo">Quinta · Venta</p>
+          <h3 class="vt-prop-titulo">San Francisco del Monte, Guaymallén, Mendoza</h3>
+          <div class="vt-prop-features">
+            <div class="vt-feat"><strong>30.000</strong>m²</div>
+          </div>
+          <div class="vt-prop-footer">
+            <a class="vt-btn-email" href="mailto:veronicatahaninmobiliaria@gmail.com?subject=Consulta Quinta San Francisco del Monte">Email</a>
+            <a class="vt-btn-wp" href="https://w.app/ryjs9q" target="_blank">Contactar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="vt-prop-card">
+        <div class="vt-prop-img-wrap">
+          <img class="vt-prop-img" src="http://localhost/wordpress-6.9.4/wordpress/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-28-at-18.32.41.jpeg" alt="Barrio Marquesado">
+          <span class="vt-prop-badge">En Venta</span>
+        </div>
+        <div class="vt-prop-body">
+          <p class="vt-prop-tipo">Casa · Venta</p>
+          <h3 class="vt-prop-titulo">Barrio Marquesado</h3>
+          <div class="vt-prop-features">
+            <div class="vt-feat"><strong>3</strong>Hab.</div>
+            <div class="vt-feat"><strong>2</strong>Baños</div>
+            <div class="vt-feat"><strong>✓</strong>Cochera</div>
+          </div>
+          <div class="vt-prop-footer">
+            <a class="vt-btn-email" href="mailto:veronicatahaninmobiliaria@gmail.com?subject=Consulta Casa Barrio Marquesado">Email</a>
+            <a class="vt-btn-wp" href="https://w.app/ryjs9q" target="_blank">Contactar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="vt-prop-card">
+        <div class="vt-prop-img-wrap">
+          <img class="vt-prop-img" src="http://localhost/wordpress-6.9.4/wordpress/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-28-at-18.33.57.jpeg" alt="Barrio La Delia">
+          <span class="vt-prop-badge">En Venta</span>
+        </div>
+        <div class="vt-prop-body">
+          <p class="vt-prop-tipo">Casa · Venta</p>
+          <h3 class="vt-prop-titulo">Barrio La Delia</h3>
+          <div class="vt-prop-features">
+            <div class="vt-feat"><strong>2</strong>Hab.</div>
+            <div class="vt-feat"><strong>1</strong>Baño</div>
+            <div class="vt-feat"><strong>✓</strong>Cochera</div>
+          </div>
+          <div class="vt-prop-footer">
+            <a class="vt-btn-email" href="mailto:veronicatahaninmobiliaria@gmail.com?subject=Consulta Casa Barrio La Delia">Email</a>
+            <a class="vt-btn-wp" href="https://w.app/ryjs9q" target="_blank">Contactar</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- EN ALQUILER -->
+  <div class="vt-section vt-bg-crema" id="vt-alquiler">
+    <div class="vt-section-header">
+      <p class="vt-section-tag">Propiedades disponibles</p>
+      <h2 class="vt-section-title">En <em>Alquiler</em></h2>
+    </div>
+    <div class="vt-prop-grid">
+
+      <div class="vt-prop-card">
+        <div class="vt-prop-img-wrap">
+          <img class="vt-prop-img" src="http://localhost/wordpress-6.9.4/wordpress/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-28-at-18.34.43.jpeg" alt="Depto 9 de Julio">
+          <span class="vt-prop-badge" style="background:var(--tostado)">En Alquiler</span>
+        </div>
+        <div class="vt-prop-body">
+          <p class="vt-prop-tipo">Departamento · Alquiler</p>
+          <h3 class="vt-prop-titulo">Departamento en calle 9 de Julio casi Espejo, Ciudad</h3>
+          <div class="vt-prop-features">
+            <div class="vt-feat"><strong>3</strong>Hab.</div>
+            <div class="vt-feat"><strong>2</strong>Baños</div>
+            <div class="vt-feat"><strong>✓</strong>Cochera</div>
+          </div>
+          <div class="vt-prop-footer">
+            <a class="vt-btn-email" href="mailto:veronicatahaninmobiliaria@gmail.com?subject=Consulta Depto 9 de Julio casi Espejo">Email</a>
+            <a class="vt-btn-wp" href="https://w.app/ryjs9q" target="_blank">Contactar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="vt-prop-card">
+        <div class="vt-prop-img-wrap">
+          <img class="vt-prop-img" src="http://localhost/wordpress-6.9.4/wordpress/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-28-at-18.40.42.jpeg" alt="Terrazas del Bombal">
+          <span class="vt-prop-badge" style="background:var(--tostado)">En Alquiler</span>
+        </div>
+        <div class="vt-prop-body">
+          <p class="vt-prop-tipo">Departamento · Alquiler</p>
+          <h3 class="vt-prop-titulo">Edificio Terrazas del Bombal, calle Beltrán</h3>
+          <div class="vt-prop-features">
+            <div class="vt-feat"><strong>2</strong>Hab.</div>
+            <div class="vt-feat"><strong>2</strong>Baños</div>
+            <div class="vt-feat"><strong>✓</strong>Cochera</div>
+          </div>
+          <div class="vt-prop-footer">
+            <a class="vt-btn-email" href="mailto:veronicatahaninmobiliaria@gmail.com?subject=Consulta Depto Terrazas del Bombal">Email</a>
+            <a class="vt-btn-wp" href="https://w.app/ryjs9q" target="_blank">Contactar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="vt-prop-card">
+        <div class="vt-prop-img-wrap">
+          <img class="vt-prop-img" src="http://localhost/wordpress-6.9.4/wordpress/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-28-at-18.41.23.jpeg" alt="Depto Azcuenaga">
+          <span class="vt-prop-badge" style="background:var(--tostado)">En Alquiler</span>
+        </div>
+        <div class="vt-prop-body">
+          <p class="vt-prop-tipo">Departamento · Alquiler</p>
+          <h3 class="vt-prop-titulo">Departamento en calle Azcuénaga</h3>
+          <div class="vt-prop-features">
+            <div class="vt-feat"><strong>2</strong>Hab.</div>
+            <div class="vt-feat"><strong>1</strong>Baño</div>
+            <div class="vt-feat"><strong>✓</strong>Cochera</div>
+          </div>
+          <div class="vt-prop-footer">
+            <a class="vt-btn-email" href="mailto:veronicatahaninmobiliaria@gmail.com?subject=Consulta Depto Azcuenaga">Email</a>
+            <a class="vt-btn-wp" href="https://w.app/ryjs9q" target="_blank">Contactar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="vt-prop-card">
+        <div class="vt-prop-img-wrap">
+          <img class="vt-prop-img" src="http://localhost/wordpress-6.9.4/wordpress/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-28-at-18.41.58.jpeg" alt="Casa Maza Sur Lunlunta">
+          <span class="vt-prop-badge" style="background:var(--tostado)">En Alquiler</span>
+        </div>
+        <div class="vt-prop-body">
+          <p class="vt-prop-tipo">Casa · Alquiler</p>
+          <h3 class="vt-prop-titulo">Maza Sur, Lunlunta, Mendoza</h3>
+          <div class="vt-prop-features">
+            <div class="vt-feat"><strong>6</strong>Hab.</div>
+            <div class="vt-feat"><strong>3</strong>Baños</div>
+            <div class="vt-feat"><strong>✓</strong>Cochera</div>
+          </div>
+          <div class="vt-prop-footer">
+            <a class="vt-btn-email" href="mailto:veronicatahaninmobiliaria@gmail.com?subject=Consulta Casa Maza Sur Lunlunta">Email</a>
+            <a class="vt-btn-wp" href="https://w.app/ryjs9q" target="_blank">Contactar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="vt-prop-card">
+        <div class="vt-prop-img-wrap">
+          <img class="vt-prop-img" src="http://localhost/wordpress-6.9.4/wordpress/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-28-at-18.42.16.jpeg" alt="Emilio Civit">
+          <span class="vt-prop-badge" style="background:var(--tostado)">En Alquiler</span>
+        </div>
+        <div class="vt-prop-body">
+          <p class="vt-prop-tipo">Casa · Alquiler</p>
+          <h3 class="vt-prop-titulo">Emilio Civit lateral Juan José Paso</h3>
+          <div class="vt-prop-features">
+            <div class="vt-feat"><strong>3</strong>Hab.</div>
+            <div class="vt-feat"><strong>2</strong>Baños</div>
+            <div class="vt-feat"><strong>✓</strong>Cochera</div>
+          </div>
+          <div class="vt-prop-footer">
+            <a class="vt-btn-email" href="mailto:veronicatahaninmobiliaria@gmail.com?subject=Consulta Casa Emilio Civit">Email</a>
+            <a class="vt-btn-wp" href="https://w.app/ryjs9q" target="_blank">Contactar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="vt-prop-card">
+        <div class="vt-prop-img-wrap">
+          <img class="vt-prop-img" src="http://localhost/wordpress-6.9.4/wordpress/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-28-at-18.43.40.jpeg" alt="Barrio Las Catalpas">
+          <span class="vt-prop-badge" style="background:var(--tostado)">En Alquiler</span>
+        </div>
+        <div class="vt-prop-body">
+          <p class="vt-prop-tipo">Casa · Alquiler</p>
+          <h3 class="vt-prop-titulo">Barrio Las Catalpas</h3>
+          <div class="vt-prop-features">
+            <div class="vt-feat"><strong>2</strong>Hab.</div>
+            <div class="vt-feat"><strong>3</strong>Baños</div>
+            <div class="vt-feat"><strong>✓</strong>Cochera</div>
+          </div>
+          <div class="vt-prop-footer">
+            <a class="vt-btn-email" href="mailto:veronicatahaninmobiliaria@gmail.com?subject=Consulta Casa Barrio Las Catalpas">Email</a>
+            <a class="vt-btn-wp" href="https://w.app/ryjs9q" target="_blank">Contactar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="vt-prop-card">
+        <div class="vt-prop-img-wrap">
+          <img class="vt-prop-img" src="http://localhost/wordpress-6.9.4/wordpress/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-28-at-18.44.05.jpeg" alt="Barrio Arizu">
+          <span class="vt-prop-badge" style="background:var(--tostado)">En Alquiler</span>
+        </div>
+        <div class="vt-prop-body">
+          <p class="vt-prop-tipo">Casa · Alquiler</p>
+          <h3 class="vt-prop-titulo">Barrio Arizu</h3>
+          <div class="vt-prop-features">
+            <div class="vt-feat"><strong>4</strong>Hab.</div>
+            <div class="vt-feat"><strong>2</strong>Baños</div>
+            <div class="vt-feat"><strong>✓</strong>Cochera</div>
+          </div>
+          <div class="vt-prop-footer">
+            <a class="vt-btn-email" href="mailto:veronicatahaninmobiliaria@gmail.com?subject=Consulta Casa Barrio Arizu">Email</a>
+            <a class="vt-btn-wp" href="https://w.app/ryjs9q" target="_blank">Contactar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="vt-prop-card">
+        <div class="vt-prop-img-wrap">
+          <img class="vt-prop-img" src="http://localhost/wordpress-6.9.4/wordpress/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-28-at-18.44.27.jpeg" alt="Oficina San Martin">
+          <span class="vt-prop-badge" style="background:var(--tostado)">En Alquiler</span>
+        </div>
+        <div class="vt-prop-body">
+          <p class="vt-prop-tipo">Oficina · Alquiler</p>
+          <h3 class="vt-prop-titulo">San Martín, Ciudad de Mendoza</h3>
+          <div class="vt-prop-features">
+            <div class="vt-feat"><strong>3</strong>Amb.</div>
+            <div class="vt-feat"><strong>2</strong>Baños</div>
+            <div class="vt-feat"><strong>✓</strong>Cochera</div>
+          </div>
+          <div class="vt-prop-footer">
+            <a class="vt-btn-email" href="mailto:veronicatahaninmobiliaria@gmail.com?subject=Consulta Oficina San Martin">Email</a>
+            <a class="vt-btn-wp" href="https://w.app/ryjs9q" target="_blank">Contactar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="vt-prop-card">
+        <div class="vt-prop-img-wrap">
+          <img class="vt-prop-img" src="http://localhost/wordpress-6.9.4/wordpress/wp-content/uploads/2026/05/WhatsApp-Image-2026-05-28-at-18.45.09.jpeg" alt="Club de Campo">
+          <span class="vt-prop-badge" style="background:var(--tostado)">En Alquiler</span>
+        </div>
+        <div class="vt-prop-body">
+          <p class="vt-prop-tipo">Casa · Alquiler</p>
+          <h3 class="vt-prop-titulo">Barrio Club de Campo</h3>
+          <div class="vt-prop-features">
+            <div class="vt-feat"><strong>4</strong>Hab.</div>
+            <div class="vt-feat"><strong>3</strong>Baños</div>
+            <div class="vt-feat"><strong>✓</strong>Cochera</div>
+          </div>
+          <div class="vt-prop-footer">
+            <a class="vt-btn-email" href="mailto:veronicatahaninmobiliaria@gmail.com?subject=Consulta Casa Club de Campo">Email</a>
+            <a class="vt-btn-wp" href="https://w.app/ryjs9q" target="_blank">Contactar</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- NOSOTROS -->
+  <div class="vt-nosotros" id="vt-nosotros">
+    <p class="vt-nosotros-tag">Sobre nosotros</p>
+    <h2 class="vt-nosotros-title">Somos una inmobiliaria<br>en <em>Mendoza</em></h2>
+    <p class="vt-nosotros-desc">Somos una inmobiliaria en Mendoza que brinda oportunidades de inversión, acompañando como siempre con una atención personalizada. Creemos que el lugar en el que vivís es el reflejo de algo más grande.</p>
+    <p class="vt-nosotros-desc">Cada propiedad fue cuidadosamente seleccionada para ofrecerte lo mejor de nuestra provincia. Estamos aquí para ayudarte a encontrar el lugar de tus sueños, sin complicaciones y con total confianza.</p>
+    <div class="vt-nosotros-stats">
+      <div><div class="vt-stat-num">10+</div><div class="vt-stat-label">Años de experiencia</div></div>
+      <div><div class="vt-stat-num">150+</div><div class="vt-stat-label">Propiedades vendidas</div></div>
+    </div>
+    <p class="vt-mat">MAT. 1404</p>
+  </div>
+
+  <!-- CONTACTO -->
+  <div class="vt-contacto" id="vt-contacto">
+    <div class="vt-section-header">
+      <p class="vt-section-tag">Hablemos</p>
+      <h2 class="vt-section-title"><em>Contáctanos</em></h2>
+    </div>
+    <div class="vt-contacto-item">
+      <div class="vt-contacto-icon">📱</div>
+      <div>
+        <div class="vt-contacto-label">WhatsApp</div>
+        <a class="vt-contacto-val" href="https://w.app/ryjs9q" target="_blank">Escribirnos por WhatsApp</a>
+      </div>
+    </div>
+    <div class="vt-contacto-item">
+      <div class="vt-contacto-icon">📧</div>
+      <div>
+        <div class="vt-contacto-label">Email</div>
+        <a class="vt-contacto-val" href="mailto:veronicatahaninmobiliaria@gmail.com">veronicatahaninmobiliaria@gmail.com</a>
+      </div>
+    </div>
+    <div class="vt-contacto-item">
+      <div class="vt-contacto-icon">📍</div>
+      <div>
+        <div class="vt-contacto-label">Ubicación</div>
+        <div class="vt-contacto-val">Mendoza, Argentina</div>
+      </div>
+    </div>
+    <a href="https://w.app/ryjs9q" target="_blank" class="vt-btn-full">Escribir por WhatsApp</a>
+    <a href="mailto:veronicatahaninmobiliaria@gmail.com" class="vt-btn-full" style="background:var(--crema); color:var(--marron); border:1px solid var(--arena);">Enviar Email</a>
+    <div class="vt-divider"></div>
+    <h3 class="vt-contacto-title">Envianos tu consulta</h3>
+    <form onsubmit="vtHandleForm(event)">
+      <div class="vt-form-group"><label>Nombre</label><input type="text" placeholder="Tu nombre" required></div>
+      <div class="vt-form-group"><label>Teléfono</label><input type="tel" placeholder="Tu teléfono"></div>
+      <div class="vt-form-group">
+        <label>Me interesa</label>
+        <select>
+          <option>Comprar una propiedad</option>
+          <option>Alquilar una propiedad</option>
+          <option>Vender mi propiedad</option>
+          <option>Otra consulta</option>
+        </select>
+      </div>
+      <div class="vt-form-group"><label>Mensaje</label><textarea placeholder="Contanos qué buscás..."></textarea></div>
+      <button type="submit" class="vt-btn-send">Enviar consulta</button>
+    </form>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="vt-footer">
+    <img class="vt-footer-logo-img" src="http://localhost/wordpress-6.9.4/wordpress/wp-content/uploads/2026/05/Veronica-Tahan-Web-28.png" alt="Verónica Tahan Inmobiliaria">
+    <div class="vt-footer-logo-text">Verónica <span>Tahan</span> Inmobiliaria · MAT. 1404</div>
+    <div class="vt-footer-copy">© 2026 · Mendoza, Argentina</div>
+  </div>
+
+</div>
+
+<script>
+function vtToggleMenu() {
+  document.getElementById('vtMenu').classList.toggle('open');
+}
+function vtCloseMenu() {
+  document.getElementById('vtMenu').classList.remove('open');
+}
+function vtHandleForm(e) {
+  e.preventDefault();
+  alert('¡Gracias! Tu consulta fue enviada. Te contactaremos pronto.');
+  e.target.reset();
+}
+</script>
